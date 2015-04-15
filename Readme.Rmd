@@ -2,7 +2,7 @@
 title: "Readme"
 author: "C.Saavedra"
 date: "Wednesday, April 15, 2015"
-output: pdf_document
+output: html_document
 ---
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
@@ -20,4 +20,12 @@ plot(cars)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+And this is my plot
+
+```{r}
+plot(cars, type="l")
+```
+
 
