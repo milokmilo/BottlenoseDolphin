@@ -18,6 +18,7 @@
 
 
 # IMPORTANT: Set working directory (to source file location)
+setwd("./Length weight/finalCode")
 
 # Charge libraries
 library(ggplot2)
