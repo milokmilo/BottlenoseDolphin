@@ -97,7 +97,7 @@ save(file="../../RObjects/gzF.RData", gzF)
 
 #### Ploting data with ggplot ####
 
-#g0 <- ggplot(TTR.A,aes(age,length)) + geom_point()
+g0 <- ggplot(TTR.A,aes(age,length)) + geom_point()
 #g1 <- g0 + geom_smooth(method="loess") + xlim(0,50) + ylim(90,300) +
 #  labs(x="age", y="length \n", title="All bottlenose dolphins - loess \n") +
 #  mytheme        # methods= lm, glm, gam, loess, rlm.
