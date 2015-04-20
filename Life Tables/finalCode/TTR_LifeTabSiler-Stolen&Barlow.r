@@ -24,6 +24,7 @@
 library(ggplot2)
 library(reshape)
 
+
 ## Reading life tables data (following Stolen and Berlow, 1993) ##
 load("../../RObjects/TTR_SilerA-S&B.RData")
 load("../../RObjects/TTR_SilerM-S&B.RData")

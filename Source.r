@@ -181,12 +181,12 @@ wd <- getwd()
 
 ### MORTALITY ###
 
-setwd("Mortality/finalCode")
+      #setwd("Mortality/finalCode")
 
 # PLOT SEVERAL MORALITY MODELS
 # Mortality fitted by different models and removing diferent ages
 # (0, 1, 2, and 3 ages removed) (exponential, GLM, polynomial and Siler models)
-source("DDE_plotMModels.r") # REQUIRES: "DDE_StrndMort.r" and "DDE_LifeTab.r"
+        #source("DDE_plotMModels.r") # REQUIRES: "DDE_StrndMort.r" and "DDE_LifeTab.r"
 ## inputs
 # "../../RObjects/ggStrnd.RData"
 # "../../RObjects/ggLife.RData"
@@ -195,9 +195,9 @@ source("DDE_plotMModels.r") # REQUIRES: "DDE_StrndMort.r" and "DDE_LifeTab.r"
 # "../plots/DDE_MAges.png"
 # "../plots/DDE_StrdModels.png"
 
-setwd(wd)
-rm(list=ls())
-wd <- getwd()
+      #setwd(wd)
+      #rm(list=ls())
+      #wd <- getwd()
 
 setwd("Mortality/finalCode")
 
@@ -321,11 +321,11 @@ wd <- getwd()
 
 ### M TEST ###
 
-setwd("By Catch/finalCode")
+#setwd("By Catch/finalCode")
 
 # TOTAL AND NATURAL MODELS                            
 # Natural and total mortality with different bycatch levels
-source("DDE_MTest.r") # REQUIRES: "DDE_LifeTabSiler.r", "DDE_byCatch.r" and "DDE_MatSex.r"
+#source("DDE_MTest.r") # REQUIRES: "DDE_LifeTabSiler.r", "DDE_byCatch.r" and "DDE_MatSex.r"
 ## inputs
 # "../../RObjects/Sparams0.RData"
 # "../../RObjects/Sparams1.RData"
@@ -341,18 +341,18 @@ source("DDE_MTest.r") # REQUIRES: "DDE_LifeTabSiler.r", "DDE_byCatch.r" and "DDE
 # "../../RObjects/Z_ByC.RData"
 # "../../RObjects/M_ByC.RData"
 
-setwd(wd)
-rm(list=ls())
-wd <- getwd()
+#setwd(wd)
+#rm(list=ls())
+#wd <- getwd()
 
 
 ### M INVERSE ###
 
-setwd("By Catch/finalCode")
+#setwd("By Catch/finalCode")
 
 # PROOFS BYCATCH MORTALITY
 # Maximum level of total mortality than the population can accept to keep constant
-source("DDE_MInverse.r") # REQUIRES: "DDE_LifeTabSiler.r", "DDE_byCatch.r", "DDE_MatSex.r" and "DDE_MTest.r"
+#source("DDE_MInverse.r") # REQUIRES: "DDE_LifeTabSiler.r", "DDE_byCatch.r", "DDE_MatSex.r" and "DDE_MTest.r"
 ## inputs
 # "../../RObjects/M_ByC.RData"
 # "../../RObjects/Z_ByC.RData"
@@ -362,9 +362,9 @@ source("DDE_MInverse.r") # REQUIRES: "DDE_LifeTabSiler.r", "DDE_byCatch.r", "DDE
 # "../plots/DDE_Minverse.png"
 # "../plots/DDE_MinverseZoom.png"
 
-setwd(wd)
-rm(list=ls())
-wd <- getwd()
+#setwd(wd)
+#rm(list=ls())
+#wd <- getwd()
 
 
 
