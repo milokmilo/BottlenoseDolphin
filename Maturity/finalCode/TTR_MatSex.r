@@ -6,8 +6,115 @@
 ####################################################################################################
 
 
+# FALTAN DATOS OBSERVADOS DE EDAD Y MADUREZ
 
-# Faltan datos de edad y madurez
+
+
+# IMPORTANT: Set working directory (to source file location)
+#setwd(".Maturity/finalCode")
+#setwd("../../Maturity/finalCode")
+
+
+# Charge libraries
+library(reshape)
+library(ggplot2)
+mytheme <-   theme(panel.background =  element_rect(fill = NA, colour = "black", size = 0.5), 
+                   legend.title=element_blank(), legend.position="top")
+
+
+# Age at sexual maturation from Wells et al., 1987
+
+age <- seq(0,50)
+matMale <- c(0,0,0,0,0,0,0,0,NA,NA,NA,NA,rep(1,39))
+matFemale <- c(0,0,0,0,0,NA,NA,NA,NA,NA,rep(1,41))
+Mat <- data.frame(age=age, matMale=matMale, matFemale=matFemale)  
+  
+
+glm.male <- glm(matMale ~ age, family="binomial", data=Mat)
+p.m <- predict(glm.male, newdata = data.frame(age=seq(0,50,0.1)), "response")
+p.male <- data.frame(age=seq(0,50,0.1), matPred=round(p.m,2))
+
+glm.female <- glm(matFemale ~ age, family="binomial", data=Mat)
+p.f <- predict(glm.female, newdata = data.frame(age=seq(0,50,0.1)), "response")
+p.female <- data.frame(age=seq(0,50,0.1), matPred=round(p.f,2))
+
+m50 <- p.male$age[match(TRUE,p.m>.5)]
+f50 <- p.female$age[match(TRUE,p.f>.5)]
+
+# Strings of the Predicted Vectors and A50
+A50 <- ls(pattern="(.+)50")
+
+
+
+## ggplot ##
+
+MatM <- data.frame(Mat[,-3], sex="M") 
+MatF <- data.frame(Mat[,-2], sex="F")
+names(MatM) <- c("age", "mat", "sex")
+names(MatF) <- c("age", "mat", "sex")  
+gMat <- rbind(MatM, MatF)
+
+p.male$sex <- "M"
+p.female$sex <- "F"
+
+ggMat <- rbind(p.male, p.female)
+
+
+gg1 <- ggplot(gMat, aes(age, mat, colour=sex)) + 
+  geom_point() + geom_line(aes(age, matPred, group=sex), data=ggMat) +
+  ylab("percentage of maturity \n") + xlab("age") +
+  ggtitle("Maturity Ogive for Bottlenose dolphin following Wells et al.,1987 (males and females)") +
+  mytheme + 
+  annotate("text", x=25, y=0.56, label=paste("Male A50 =", m50, sep=""), col="deepskyblue") + 
+  annotate("text", x=25, y=0.5, label=paste("Female A50 =", f50, sep=""), col="orangered")
+
+
+png("../plots/TTR_MatSex.png", width=600, height=400)
+print(gg1)
+dev.off()
+
+
+
+# Save maturity data
+save(Mat, file="../../RObjects/TTR_Mat-Wells.RData")
+
+
+### BOOTSTRAP MATURITY OGIVE, A50 AND CI ###
+
+myA50Boot <- function(data){
+  srows <- sample(1:nrow(data),nrow(data),TRUE)
+  glm.out <- glm(mat ~ age, family=binomial(link=logit), data=data[srows,])
+  range <- seq(0,29,0.1) # this must be any substantively meaningful range
+  p <- predict(glm.out, newdata = data.frame(age=range), "response")
+  return(range[match(TRUE,p>.5)]) # predicted probability of 50% maturity
+}
+nboot <- 1000
+
+## CI for A50 Males ##
+bootdist <- replicate(nboot, myA50Boot(data=MatM)) # your distribution
+quantile(unlist(bootdist),c(.025,.5,.975)) # 95% CI
+# 2.5%   50% 97.5% 
+# 8.1   9.6  11.1 
+
+## CI for A50 Females ##
+bootdist <- replicate(nboot, myA50Boot(data=MatF)) # your distribution
+quantile(unlist(bootdist),c(.025,.5,.975)) # 95% CI
+# 2.5%   50% 97.5% 
+# 5.6   7.1   8.6 
+
+
+
+
+
+
+
+####################################################################################################
+
+
+
+
+
+
 
 
 
@@ -22,14 +129,8 @@
 # "../../RObjects/TTR_MatMale.RData"
 # "../plots/TTR_MatSex.png"
 
-# IMPORTANT: Set working directory (to source file location)
-#setwd(".Maturity/finalCode")
-#setwd("../../Maturity/finalCode")
 
 
-# Charge libraries
-library(reshape)
-library(ggplot2)
 
 # Read data
 CEMMA <- read.csv("../../RData/CEMMA.csv")
