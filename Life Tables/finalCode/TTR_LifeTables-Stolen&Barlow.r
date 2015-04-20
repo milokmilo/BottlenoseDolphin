@@ -6,9 +6,6 @@
 #                modified: (camilo.saavedra@vi.ieo.es) 13/04/2015
 ################################################################################################### #
 
-## IMPORTANT: Set working directory (to source file location)
-
-
 ## inputs
 ## Stolen & Barlow, 2003
 
@@ -28,6 +25,11 @@
 ## "../plots/TTR_SilSurvM-S&B.png"
 ## "../plots/TTR_SilerF-S&B.png"
 ## "../plots/TTR_SilSurvF-S&B.png"
+
+
+# IMPORTANT: Set working directory (to source file location)
+#setwd("./Life Tables/finalCode")
+#setwd("../../Life Tables/finalCode")
 
 
 ## Charge libraries
@@ -484,13 +486,4 @@ png("../plots/TTR_SilSurvF-S&B.png", width=600, height=400)
 print(ddSurv)
 dev.off()
 
-
-
-
-
-
-#### ADAPTACIÓN PARA EL DELFÍN COMÚN ####
-
-#load("../RObjects/lifeBot.RData")
-#bottle <- data.frame(age = 30/35 * 0:35, qx=bot.qx) # Convertimos edades 0:35 en edades 0:30 
 
