@@ -5,9 +5,6 @@
 #                created: (camilo.saavedra@vi.ieo.es) 04/04/2015
 ####################################################################################################
 
-# IMPORTANT: Set working directory (to source file location)
-
-
 # inputs
 # "../../RObjects/TTR_SilerA-S&B.RData"
 # "../../RObjects/TTR_SilerM-S&B.RData"
@@ -18,6 +15,10 @@
 # ../../RObjects/lifeSilerM-S&B.RData
 # ../../RObjects/lifeSilerF-S&B.RData
 
+
+# IMPORTANT: Set working directory (to source file location)
+#setwd("./Life Tables/finalCode")
+#setwd("../../Life Tables/finalCode")
 
 # Charge libraries
 library(ggplot2)
@@ -106,7 +107,6 @@ rm(lifeSiler)
 
 
 ## Females
-
 
 lifeSiler <- data.frame(age=c(0,seq(1:36)), qx=round(get(paste("Siler","F",sep=""))$BotSiler,3))
 n <- 1000
