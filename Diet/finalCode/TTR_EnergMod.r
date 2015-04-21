@@ -1,56 +1,64 @@
-####################################################################################################
+################################################################################################## #
 #                    ENERGY MODELS ANALYSIS - BOTTLENOSE DOLPHIN DIET
 #                      Plotting all energy model and an average model
 #                          Plot of the length weight distribution
-#                    created: (camilo.saavedra@vi.ieo.es) 04/12/2013
-####################################################################################################
+#                    created: (camilo.saavedra@vi.ieo.es) 21/04/2015
+################################################################################################## #
 
 # inputs
-# "../../RObjects/DDE_AllDietWeight.RData"
-# "../../RData/KjCDGal.csv"
-# "../../RData/KjCDPt.csv"
-
+# "../../RObjects/TTR_AllDietWeight.RData"
+# "../../RData/KjBDGal.csv"
+# "../../RData/KjBDPt.csv"
 # outputs
-# "../plots/DDE_EnergMod.png"
-# "../plots/DDE_EnergMod0.png"
-# "../plots/DDE_LenWeiDistr.png"
+# "../plots/TTR_EnergMod.png"
+# "../plots/TTR_EnergMod0.png"
+# "../plots/TTR_LenWeiDistr.png"
+
+################################################################################################## #
+
 
 # IMPORTANT: Set working directory (to source file location)
+#setwd("./Diet/finalCode")
+#setwd("../../Diet/finalCode")
+
 
 # Charge libraries
 library(ggplot2)
 library(reshape)
-library(ggthemes)
 library(boot)
 library(grid)
+mytheme <-  theme(panel.background =  element_rect(fill = NA, colour = "black", size = 0.5), 
+                  legend.title=element_blank(), legend.position="top")
+
 
 # Read data
-load("../../RObjects/DDE_AllDietWeight.RData")
+load("../../RObjects/TTR_AllDietWeight.RData")
+
 
 ### Data information ###
 
 # Years range
-s <- substr(dde$Date, 7,10)
+s <- substr(ttrDiet$Date, 7,10)
 s <- as.numeric(s)
 range(s, na.rm=T)
 # Number of dolphins analysed
-length(unique(dde$No)) # total analised
-length(unique(dde[!is.na(dde$Length),"No"])) # analised with length data
-length(unique(dde[!is.na(dde$Sex),"No"])) # analised with sex data
+length(unique(ttrDiet$No)) # total samples 81
+length(unique(ttrDiet[!is.na(ttrDiet$Length),"No"])) # samples with length data 65
+length(unique(ttrDiet[!ttrDiet$Sex == 0, "No"])) # samples with sex data 74
 # Ranges
-range(dde$Length, na.rm=T) # length range
-range(dde$W, na.rm=T) # weight range
-avDolph <- mean(dde$W, na.rm=T); avDolph # mean weight (average dolphin)
+range(ttrDiet$Length, na.rm=T) # length range 179 320
+range(ttrDiet$W, na.rm=T) # weight range 73.45677 579.30071
+avDolph <- mean(ttrDiet$W, na.rm=T); avDolph # mean weight (average dolphin) 308.5955
 
 ### ggPlotting length dolphins distribution ###
 
-wei <- tapply(dde$W, dde$No, mean)
+wei <- tapply(ttrDiet$W, ttrDiet$No, mean)
 wei <- round(wei)
 weiFreq <- table(wei)
 weiFreq <- as.data.frame(weiFreq)
 weiFreq$wei <- as.numeric(as.character(weiFreq$wei))
 weiFreqRg <- data.frame(weiFreq, 
-                        rg=cut(weiFreq$wei, breaks=seq(20,140,5)))
+                        rg=cut(weiFreq$wei, breaks=seq(70,600,20)))
 ggData1 <- tapply(weiFreqRg$Freq, weiFreqRg$rg, sum)
 ggData1 <- data.frame(Freq= ggData1[], rg=names(ggData1))
 val <- gsub("^\\(", "", ggData1$rg)
@@ -58,19 +66,18 @@ val <- gsub(",+[0-9]+\\]","", val)
 ggData1$val <- as.numeric(val)+2.5
 
 gg1 <- ggplot(ggData1, aes(val, Freq)) + geom_bar(stat="identity") +
-  scale_x_continuous(breaks=seq(20,140,5), labels=seq(20,140,5)) +
+  scale_x_continuous(breaks=seq(70,600,20), labels=seq(70,600,20)) +
   ylab("frequency") + xlab("weight (kg)") + 
-  ggtitle("common dolphin - estimated weight distribution") + 
-  theme(panel.background =  element_rect(fill = NA, colour = "black", size = 0.5), 
-        legend.title=element_blank(), legend.position="top")
+  ggtitle("bottlenose dolphin - estimated weight distribution") + 
+  mytheme
 
-len <- tapply(dde$Length, dde$No, mean)
+len <- tapply(ttrDiet$Length, ttrDiet$No, mean)
 len <- round(len)
 lenFreq <- table(len)
 lenFreq <- as.data.frame(lenFreq)
 lenFreq$len <- as.numeric(as.character(lenFreq$len))
 lenFreqRg <- data.frame(lenFreq, 
-                        rg=cut(lenFreq$len, breaks=seq(120,240,5)))
+                        rg=cut(lenFreq$len, breaks=seq(160,320,10)))
 ggData2 <- tapply(lenFreqRg$Freq, lenFreqRg$rg, sum)
 ggData2 <- data.frame(Freq= ggData2[], rg=names(ggData2))
 val <- gsub("^\\(", "", ggData2$rg)
@@ -78,14 +85,13 @@ val <- gsub(",+[0-9]+\\]","", val)
 ggData2$val <- as.numeric(val)+2.5
 
 gg2 <- ggplot(ggData2, aes(val, Freq)) + geom_bar(stat="identity") +
-  scale_x_continuous(breaks=seq(120,240,5), labels=seq(120,240,5)) +
+  scale_x_continuous(breaks=seq(160,320,10), labels=seq(160,320,10)) +
   ylab("frequency") + xlab("length (cm)") + 
-  ggtitle("common dolphin - length distribution") + 
-  theme(panel.background =  element_rect(fill = NA, colour = "black", size = 0.5), 
-        legend.title=element_blank(), legend.position="top")
+  ggtitle("bottlenose dolphin - length distribution") + 
+  mytheme
 
 #```{r smallplot, fig.width=16, fig.height=8}
-png("../plots/DDE_LenWeiDistr.png", width=600, height=400)
+png("../plots/TTR_LenWeiDistr.png", width=600, height=400)
 vplayout <- function(x, y) viewport(layout.pos.row = x, layout.pos.col = y)
 grid.newpage()
 pushViewport(viewport(layout = grid.layout(2, 1))) # 5 rows, 1 column
@@ -100,42 +106,7 @@ dev.off()
 df <- data.frame(w=wei[!is.na(wei)])
 
 # number of dolphins with measured length
-nrow(df)
-
-##### Kastelein et al. (2012) #####
-
-# Kastelein linear increase between 60 and 100kg
-y = c(0.12,0.06)
-x = c(60,100)
-Kaslm <- lm (y ~ x )
-a <- coef(Kaslm)[[1]]
-b <- coef(Kaslm)[[2]]
-
-# Daily food intake estimation
-for ( i in 1:nrow(df)){
-if (df$w[i] <=60){
-  df$Kas[i] <- df$w[i] * 0.12   
-  } else {
-    if (60 < df$w[i] & df$w[i] < 100) {
-     df$Kas[i] <- (a+b*df$w[i]) * df$w[i] 
-    #df$w[i]*(0.06+((100-df$w[i])/100)*0.06) # miscalculation - original paper
-     0.12-(100-df$w[i])*0.06
-    } else {
-      if (df$w[i] >= 100) {
-        df$Kas[i] <- df$w[i] * 0.06     
-      } else {
-        stop("something wrong")
-      }
-    } 
-  }
-}
-
-# Bootstrap for an average dolphin (for the mean) with Kastelein index
-meanFuncKast <- function(data, d){
-  sum(na.omit(data[d])/length(na.omit(data[d])))
-}
-bootKas  <- boot(data=df$Kas, meanFuncKast, R=1000)
-bootCIKas  <- boot.ci(bootKas, type=c("perc")) 
+nrow(df) # 65
 
 
 ##### Innes et al. (1987) #####
@@ -152,25 +123,48 @@ bootCIIn <- boot.ci(bootIn, type=c("perc"))
 
 
 
-##### Kleiber (1947) #####
+##### Yeates and Houser (2008) #####
+
+mlO2MinKg <- 4.4
+lO2 <- mlO2MinKg*20/1000 
+dayMin <- 24*60
+AMRmultHPBD <- 3 # AMR multiplicador para marsopa o delfin mular
 
 # Daily food intake estimation
-KjGal <- read.csv("../../RData/KjCDGal.csv")
-KjPt <- read.csv("../../RData/KjCDPt.csv")
+KjGal <- read.csv("../../RData/KjBDGal.csv")
+KjAst <- read.csv("../../RData/KjBDAst.csv")
 
-KjKgCDGal <- sum(KjGal[,4] * KjGal[,5] * 10)
-KjKgCDPt <- sum(KjPt[,4] * KjPt[,5] * 10)
-df$KleG <-  (293*df$w^0.75)/KjKgCDGal/0.925*4
-df$KleP <-  (293*df$w^0.75)/KjKgCDPt/0.925*4
+KjKgBDGal <- sum(KjGal[,4] * KjGal[,5] * 10)
+KjKgBDAst <- sum(KjAst[,4] * KjAst[,5] * 10)
+
+df$YHGal <- lO2*dayMin*df$w*AMRmultHPBD/KjKgBDGal*0.925
+df$YHAst <- lO2*dayMin*df$w*AMRmultHPBD/KjKgBDAst*0.925
+
+# Bootstrap for an average dolphin (for the mean) with Yeates and Houser index
+meanFuncYeatHous <- function(data, d){
+  sum(na.omit(data[d]))/length(na.omit(data[d]))
+}
+bootYHG <- boot(data=df$YHG, meanFuncYeatHous, R=1000)
+bootCIYHG <- boot.ci(bootYHG, type=c("perc"))
+bootYHA <- boot(data=df$YHA, meanFuncYeatHous, R=1000)
+bootCIYHA <- boot.ci(bootYHA, type=c("perc"))
+
+
+
+##### Kleiber (1947) #####
+
+df$KleG <-  (293*df$w^0.75)/KjKgBDGal/0.925*4
+df$KleAst <-  (293*df$w^0.75)/KjKgBDAst/0.925*4
 
 # Bootstrap for an average dolphin (for the mean) with kleiber index
 meanFuncKleiber <- function(data, d){
   sum(na.omit(data[d]))/length(na.omit(data[d]))
 }
-bootInG <- boot(data=df$KleG, meanFuncKleiber, R=1000)
-bootCIInG <- boot.ci(bootInG, type=c("perc"))
-bootInP <- boot(data=df$KleP, meanFuncKleiber, R=1000)
-bootCIInP <- boot.ci(bootInP, type=c("perc"))
+
+bootKlG <- boot(data=df$KleG, meanFuncKleiber, R=1000)
+bootCIKlG <- boot.ci(bootKlG, type=c("perc"))
+bootKlA <- boot(data=df$KleA, meanFuncKleiber, R=1000)
+bootCIKlA <- boot.ci(bootKlA, type=c("perc"))
 
 
 ### Fitted a new model with all indices for Galicia and Portugal ###
@@ -208,7 +202,8 @@ bootNewMod[[1]] / avDolph
 bootCINewMod[[4]][[4]] / avDolph
 bootCINewMod[[4]][[5]] / avDolph
 
-A + B * 70.97149 
+A + B * avDolph # 18.50334
+
 ### ggPloting ###
 
 ggData <- melt(df, id.vars="w")
@@ -217,12 +212,11 @@ dat1 <- ggData[!(ggData$variable=="mod" | ggData$variable=="mod0"),]
 
 gg1 <- ggplot(dat1, aes(w, value, group=variable)) + 
         geom_point(aes(colour=variable), pch=1) +
-        ggtitle("Energy models and new fitted model") + 
-        scale_x_continuous(breaks=seq(20,140,20)) +
-        scale_y_continuous(breaks=seq(0,10,2), limits=c(0,10.5)) +
+        ggtitle("Energy models for Bottlenose dolphin and new fitted models") + 
+        scale_x_continuous(breaks=seq(50,500,50), limits=c(90,500)) +
+        scale_y_continuous(breaks=seq(0,30,2), limits=c(4,30)) +
         ylab("daily food intake (kg)") + xlab("dolphin weight (kg)") +
-        theme(panel.background =  element_rect(fill = NA, colour = "black", size = 0.5), 
-              legend.title=element_blank(), legend.position="top")
+        mytheme
 
 dat2 <- ggData[ggData$variable=="mod",]
 dat3 <- ggData[ggData$variable=="mod0",]
@@ -231,42 +225,57 @@ gg2 <- gg1 + geom_line(data=dat2, aes(w, value), cex=1)
 gg3 <- gg2 + geom_line(data=dat3, aes(w, value), cex=1, lty=2)
 
 #```{r smallplot, fig.width=16, fig.height=8}
-png("../plots/DDE_EnergMod.png", width=600, height=400)
+png("../plots/TTR_EnergMod.png", width=600, height=400)
 print(gg2)
 dev.off()
 #```
 
 #```{r smallplot, fig.width=16, fig.height=8}
-png("../plots/DDE_EnergMod0.png", width=600, height=400)
+png("../plots/TTR_EnergMod0.png", width=600, height=400)
 print(gg3)
 dev.off()
 #```
 
 #########################################################################
 
-# Only Galicia
+# Kleiber Only Galicia
 
-energModG <- lm(allEnerg[!allEnerg$variable=="KleP","value"] ~ allEnerg[!allEnerg$variable=="KleP","w"])
-A <- coef(energModG)[[1]]
-B <- coef(energModG)[[2]]
+KlModG <- lm(allEnerg[!allEnerg$variable=="KleG","value"] ~ allEnerg[!allEnerg$variable=="KleG","w"])
+A <- coef(KlModG)[[1]]
+B <- coef(KlModG)[[2]]
 
-consEstG <- A + B * df$w
-
-#lines(df$w, consEstG)
-mean(consEstG)
-
-# Only Portugal
-
-energModP <- lm(allEnerg[!allEnerg$variable=="KleG","value"] ~ allEnerg[!allEnerg$variable=="KleG","w"])
-A <- coef(energModP)[[1]]
-B <- coef(energModP)[[2]]
-
-consEstP <- A + B * df$w
-
-#lines(df$w, consEstP)
-mean(consEst)
+KlEstG <- A + B * df$w
+mean(KlEstG) # 19.12357
 
 
+# Kleiber Only Asturias
+
+KlModA <- lm(allEnerg[!allEnerg$variable=="KleA","value"] ~ allEnerg[!allEnerg$variable=="KleA","w"])
+A <- coef(KlModA)[[1]]
+B <- coef(KlModA)[[2]]
+
+KlEstA <- A + B * df$w
+mean(KlEstA) # 18.96999
+
+
+# Yeates and Houser Only Galicia
+
+YHModG <- lm(allEnerg[!allEnerg$variable=="YHGal","value"] ~ allEnerg[!allEnerg$variable=="YHGal","w"])
+A <- coef(YHModG)[[1]]
+B <- coef(YHModG)[[2]]
+
+YHEstG <- A + B * df$w
+mean(YHEstG) # 18.42509
+
+
+# Yeates and Houser Only Asturias
+
+YHModA <- lm(allEnerg[!allEnerg$variable=="YHAst","value"] ~ allEnerg[!allEnerg$variable=="YHAst","w"])
+A <- coef(YHModA)[[1]]
+B <- coef(YHModA)[[2]]
+
+YHEstA <- A + B * df$w
+mean(YHEstA) # 17.93537
 
 
 

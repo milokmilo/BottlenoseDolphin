@@ -31,6 +31,13 @@ mytheme <- theme(panel.background =  element_rect(fill = NA, colour = "black", s
                  legend.title= element_blank(), legend.position="top")
 
 
+###########     Length-Weight relationship  (Pierce et al., 2005)    #############
+
+
+log W = 5.597 + 3.2692 log L (R2=0.711)
+
+
+
 
 ###########     Length-Weight relationship  (Ridgway and Fenner, 1982)    #############
 
