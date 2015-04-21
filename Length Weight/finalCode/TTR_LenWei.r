@@ -16,6 +16,9 @@
 
 # outputs
 # "../plots/TTR_LengthWeight-Wells&Scott.png"
+# "../../RObjects/LWmales.RData"
+# "../../RObjects/LWfemales.RData"
+# "../../RObjects/LWall.RData"
 
 
 # IMPORTANT: Set working directory (to source file location)
@@ -160,13 +163,15 @@ AWMales$weight <- predict(vbWM, newdata=AWMales)
 # Fit exponential model for length/weight and predict values
 ALWMales <- cbind(ALMales, weight=AWMales$weight)
 Mem <- nls(weight ~ exp(a + b * length), data=ALWMales, start = list(a = 4, b = 0.003))
-coef(Mem)
+LWmales <- coef(Mem)
 # a          b 
 # 1.50137935 0.01518888 
 Mmod <- data.frame(length=seq(90,300)) 
 Mmod$weight <- predict(Mem,newdata=Mmod) 
 #plot(x=ALWMales$length,y=ALWMales$weight,xlim=c(100,300),ylim=c(0,350))
 #lines(Mmod, col="blue")
+
+save(LWmales, file="../../RObjects/LWmales.RData")
 
 
   # Females
@@ -186,13 +191,15 @@ AWFemales$weight <- predict(vbWF, newdata=AWFemales)
 # Fit exponential model for length/weight and predict values
 ALWFemales <- cbind(ALFemales, weight=AWFemales$weight)
 Fem <- nls(weight ~ exp(a + b * length), data=ALWFemales, start = list(a = 4, b = 0.003))
-coef(Fem)
+LWfemales <- coef(Fem)
 # a          b 
 # 1.78346257 0.01404042
 Fmod <- data.frame(length=seq(100,300)) 
 Fmod$weight <- predict(Fem,newdata=Fmod) 
 #plot(x=ALWFemales$length, y=ALWFemales$weight, xlim=c(100,300), ylim=c(0,350))
 #lines(Fmod, col="red")
+
+save(LWfemales, file="../../RObjects/LWfemales.RData")
 
 
   # All
@@ -204,7 +211,7 @@ ALW <- rbind(ALWMales, ALWFemales)
 
 # Fit exponential model for length/weight and predict values
 Aem <- nls(weight ~ exp(a + b * length), data=ALW, start = list(a = 4, b = 0.003))
-#coef(Aem)
+LWall <- coef(Aem)
 #        a          b 
 # 1.54827648 0.01500401
 Amod <- data.frame(length=seq(100,300))
@@ -212,6 +219,7 @@ Amod$weight <- predict(Aem,newdata=Amod)
 #plot(x=ALW$length, y=ALW$weight, xlim=c(100,300), ylim=c(0,350))
 #lines(Amod, col="green")
 
+save(LWall, file="../../RObjects/LWall.RData")
 
 
 ### Plotting ###
