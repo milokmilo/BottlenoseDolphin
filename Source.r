@@ -54,7 +54,6 @@ setwd("Life Tables/finalCode")
 # raw data -number of stranded dolphins- extracted from Stolen and Barlow, 2003                    
 
 source("TTR_LifeTables-Stolen&Barlow.r")
-
 ## inputs
 # Stolen & Barlow, 2003
 ## outputs
@@ -83,7 +82,6 @@ source("TTR_LifeTables-Stolen&Barlow.r")
 # Exponential, GLM Poisson, second-degree polynomial, thirt-degree polynomial
 
       #source("DDE_StrndMort.r")
-
 ## inputs
 # "../../RData/CEMMA.csv"
 ## outputs
@@ -117,7 +115,6 @@ source("TTR_LifeTables-Stolen&Barlow.r")
 # (exponential, GLM Poisson and second-degree polynomial)
 
       #source("DDE_LifeTab.r") # REQUIRES: "DDE_StrndMort.r"
-
 ## inputs
 # "../../RData/CEMMA.csv"
 # "../../RObjects/MExp0.RData"
@@ -163,7 +160,6 @@ setwd("Life Tables/finalCode")
 # using data from Stolen and Barlow, 1993
 
 source("TTR_LifeTabSiler-Stolen&Barlow.r")
-
 ## inputs
 # "../../RObjects/TTR_SilerA-S&B.RData"
 # "../../RObjects/TTR_SilerM-S&B.RData"
@@ -172,7 +168,6 @@ source("TTR_LifeTabSiler-Stolen&Barlow.r")
 # ../../RObjects/lifeSilerA-S&B.RData
 # ../../RObjects/lifeSilerM-S&B.RData
 # ../../RObjects/lifeSilerF-S&B.RData
-
 
 setwd(wd)
 rm(list=ls())
@@ -186,7 +181,8 @@ wd <- getwd()
 # PLOT SEVERAL MORALITY MODELS
 # Mortality fitted by different models and removing diferent ages
 # (0, 1, 2, and 3 ages removed) (exponential, GLM, polynomial and Siler models)
-        #source("DDE_plotMModels.r") # REQUIRES: "DDE_StrndMort.r" and "DDE_LifeTab.r"
+
+      #source("DDE_plotMModels.r") # REQUIRES: "DDE_StrndMort.r" and "DDE_LifeTab.r"
 ## inputs
 # "../../RObjects/ggStrnd.RData"
 # "../../RObjects/ggLife.RData"
@@ -199,12 +195,14 @@ wd <- getwd()
       #rm(list=ls())
       #wd <- getwd()
 
-setwd("Mortality/finalCode")
+
+      #setwd("Mortality/finalCode")
 
 # MORTALITY SURVIVORSHIP PLOT
 # Mortality and survivorship fitted by different models and removing two ages
 # (exponential, GLM, polynomial and Siler models)
-source("DDE_MortSurvPlot.r") # REQUIRES: "DDE_StrndMort.r", "DDE_LifeTab.r" and "DDE_LifeTabSiler.r"
+
+      #source("DDE_MortSurvPlot.r") # REQUIRES: "DDE_StrndMort.r", "DDE_LifeTab.r" and "DDE_LifeTabSiler.r"
 ## inputs
 # "../../RObjects/lifeN.RData"
 # "../../RObjects/lifeExp2.RData"
@@ -214,19 +212,20 @@ source("DDE_MortSurvPlot.r") # REQUIRES: "DDE_StrndMort.r", "DDE_LifeTab.r" and 
 ## outputs
 # "../plots/DDE_MortSuv.png"
 
-setwd(wd)
-rm(list=ls())
-wd <- getwd()
+      #setwd(wd)
+      #rm(list=ls())
+      #wd <- getwd()
 
 
 ### MATURITY ###
 
-setwd("Maturity/finalCode")
+      #setwd("Maturity/finalCode")
 
 # MATURITY SPLITED BY SEX
 # Three datasets fitted (males, females, females with old immature females removed)    
 # Bootstrap to calculate the 95% CL of the A50 
-source("DDE_MatSex.r")
+
+      #source("DDE_MatSex.r")
 ## inputs
 # "../../RData/CEMMA.csv"
 ## outputs
@@ -235,37 +234,39 @@ source("DDE_MatSex.r")
 # "../../RObjects/MatMale.RData"
 # "../plots/DDE_MatSex.png"
 
-setwd(wd)
-rm(list=ls())
-wd <- getwd()
+      #setwd(wd)
+      #rm(list=ls())
+      #wd <- getwd()
 
 
 ### BY CATCH ###
 
-setwd("By Catch/finalCode")
+      #setwd("By Catch/finalCode")
 
 # BY CATCH        
 # Splitting the total mortality in natural and fishing mortality by age. 
-source("DDE_byCatch.r")
+
+      #source("DDE_byCatch.r")
 ## inputs
 # "../../RData/CEMMA.csv"
 ## outputs
 # "../../RObjects/byCatch.RData"
 # "../plots/DDE_StrndZMF.png
 
-setwd(wd)
-rm(list=ls())
-wd <- getwd()
+      #setwd(wd)
+      #rm(list=ls())
+      #wd <- getwd()
 
 
 ### BY CATCH LIFE TABLES ###
 
-setwd("Life Tables/finalCode")
+      #setwd("Life Tables/finalCode")
 
 # BY CATCH SILER LIFE TABLES 
 # Observed life tables with both total, bycatch and no bycatch data.
 # Siler mortality model and Siler life tables with both types of strandings
-source("DDE_LifeTabByC.r") # REQUIRES: "DDE_byCatch.r"
+
+      #source("DDE_LifeTabByC.r") # REQUIRES: "DDE_byCatch.r"
 ## inputs
 # "../../RObjects/byCatch.RData"
 ## outputs
@@ -274,19 +275,20 @@ source("DDE_LifeTabByC.r") # REQUIRES: "DDE_byCatch.r"
 # "../../RObjects/lifeSilerNByC.RData"
 # "../plots/DDE_SilerNByC.png"
 
-setwd(wd)
-rm(list=ls())
-wd <- getwd()
+      #setwd(wd)
+      #rm(list=ls())
+      #wd <- getwd()
 
 
 ### POPULATION STRUCTURE ###
 
-#setwd("Population Structure/finalCode")
+      #setwd("Population Structure/finalCode")
 
 ## POPULATION STRUCTURE
 ## Population structure calculated with different models 
 ## (observed data, glm and Siler removing the first two ages and Siler without bycatch)
-#source("DDE_popStr.r") # REQUIRES: "DDE_StrndMort.r", "DDE_LifeTab.r", "DDE_byCatch.r" and "DDE_lifeTabByC.r"
+
+      #source("DDE_popStr.r") # REQUIRES: "DDE_StrndMort.r", "DDE_LifeTab.r", "DDE_byCatch.r" and "DDE_lifeTabByC.r"
 ### inputs
 # "../../RObjects/lifeN.RData"
 # "../../RObjects/lifeglmPois2.RData"
@@ -295,37 +297,39 @@ wd <- getwd()
 ### outputs
 # "../../RObjects/popStr.RData"
 
-#setwd(wd)
-#rm(list=ls())
-#wd <- getwd()
+      #setwd(wd)
+      #rm(list=ls())
+      #wd <- getwd()
 
 
 ### RECRUITMENT ###
 
-#setwd("Recruitmen/finalCode")
+      #setwd("Recruitmen/finalCode")
 
 # RECRUITMENT (BIRTHS)
 # Recruits calculated with three pregnancy rates for all fitted models
 # (observed data, glm and Siler removing the first two ages and Siler without bycatch)
-#source("DDE_Rec.r") # REQUIRES: "DDE_MatSex.r" "DDE_StrndMort.r", "DDE_LifeTab.r", "DDE_byCatch.r", "DDE_lifeTabByC.r" and "DDE_popStr.r"
+
+      #source("DDE_Rec.r") # REQUIRES: "DDE_MatSex.r" "DDE_StrndMort.r", "DDE_LifeTab.r", "DDE_byCatch.r", "DDE_lifeTabByC.r" and "DDE_popStr.r"
 ### inputs
 # "../../RObjects/matFemC.RData"
 # "../../RObjects/popStr.RData"
 ### outputs
 # "../../RObjects/Rec.RData"
 
-#setwd(wd)
-#rm(list=ls())
-#wd <- getwd()
+      #setwd(wd)
+      #rm(list=ls())
+      #wd <- getwd()
 
 
 ### M TEST ###
 
-#setwd("By Catch/finalCode")
+      #setwd("By Catch/finalCode")
 
 # TOTAL AND NATURAL MODELS                            
 # Natural and total mortality with different bycatch levels
-#source("DDE_MTest.r") # REQUIRES: "DDE_LifeTabSiler.r", "DDE_byCatch.r" and "DDE_MatSex.r"
+
+      #source("DDE_MTest.r") # REQUIRES: "DDE_LifeTabSiler.r", "DDE_byCatch.r" and "DDE_MatSex.r"
 ## inputs
 # "../../RObjects/Sparams0.RData"
 # "../../RObjects/Sparams1.RData"
@@ -341,18 +345,19 @@ wd <- getwd()
 # "../../RObjects/Z_ByC.RData"
 # "../../RObjects/M_ByC.RData"
 
-#setwd(wd)
-#rm(list=ls())
-#wd <- getwd()
+      #setwd(wd)
+      #rm(list=ls())
+      #wd <- getwd()
 
 
 ### M INVERSE ###
 
-#setwd("By Catch/finalCode")
+      #setwd("By Catch/finalCode")
 
 # PROOFS BYCATCH MORTALITY
 # Maximum level of total mortality than the population can accept to keep constant
-#source("DDE_MInverse.r") # REQUIRES: "DDE_LifeTabSiler.r", "DDE_byCatch.r", "DDE_MatSex.r" and "DDE_MTest.r"
+
+      #source("DDE_MInverse.r") # REQUIRES: "DDE_LifeTabSiler.r", "DDE_byCatch.r", "DDE_MatSex.r" and "DDE_MTest.r"
 ## inputs
 # "../../RObjects/M_ByC.RData"
 # "../../RObjects/Z_ByC.RData"
@@ -362,9 +367,9 @@ wd <- getwd()
 # "../plots/DDE_Minverse.png"
 # "../plots/DDE_MinverseZoom.png"
 
-#setwd(wd)
-#rm(list=ls())
-#wd <- getwd()
+      #setwd(wd)
+      #rm(list=ls())
+      #wd <- getwd()
 
 
 
@@ -375,12 +380,13 @@ wd <- getwd()
 ### LENGTH WEIGHT ###
 
 setwd("Length Weight/finalCode")
+
 # LENGTH-WEIGHT CURVES FOR BOTLLENOSE DOLPHIN
 # Estimate length-weight relationship based on 
 # Ridgway and Fenner, 1982 relationship and
 # age-length and age-weight relationship in Wells and Scott, 1999
 
-source("DDE_LenWei.r")
+source("TTR_LenWei.r")
 # inputs
 # "../../RData/MaleTTR-AgeWeight.txt
 # "../../RData/FemaleTTR-AgeWeight.txt
@@ -389,42 +395,51 @@ source("DDE_LenWei.r")
 # "../../RObjects/vbA.RData"
 # outputs
 # "../plots/TTR_LengthWeight-Wells&Scott.png"
+# "../../RObjects/LWmales.RData"
+# "../../RObjects/LWfemales.RData"
+# "../../RObjects/LWall.RData"
+
 
 setwd(wd)
 rm(list=ls())
 wd <- getwd()
 
 
-#setwd("Length Weight/finalCode")
+setwd("Length Weight/finalCode")
 
-## ENERGY MODELS ANALYSIS - COMMON DOLPHIN DIET (HAKE)
-## Build an object with the diet and dolphin weight
-#source("DDE_DietWei.r")
-### inputs
-# "../../RData/DDE_AllDiet.csv"
-### outputs
-# "../../RObjects/DDE_AllDietWeight.RData"
+# ENERGY MODELS ANALYSIS - BOTTLENOSE DOLPHIN DIET (HAKE)
+# Build an object with the diet and dolphin weight
 
-#setwd(wd)
-#rm(list=ls())
-#wd <- getwd()
+source("DDE_DietWei.r")
+## inputs
+# "../../RData/TTR_AllDiet.csv"
+# "../../RObjects/LWmales.RData"
+# "../../RObjects/LWfemales.RData"
+# "../../RObjects/LWall.RData"
+## outputs
+# "../../RObjects/TTR_AllDietWeight.RData"
+
+setwd(wd)
+rm(list=ls())
+wd <- getwd()
 
 
 ### DIET ###
 
 setwd("Diet/finalCode")
 
-# ENERGY MODELS ANALYSIS - COMMON DOLPHIN DIET
-# Plotting all energy model and an average model. Plot of the length weight distribution
+# ENERGY MODELS ANALYSIS - BOTTLENOSE DOLPHIN DIET
+# Plotting all energy model and an average model
+
 source("DDE_EnergMod.r") # REQUIRE: "DDE_DietWei.r"
 ## inputs
-# "../../RObjects/DDE_AllDietWeight.RData"
+# "../../RObjects/TTR_AllDietWeight.RData"
 # "../../RData/KjCDGal.csv"
 # "../../RData/KjCDPt.csv"
 ## outputs
-# "../plots/DDE_EnergMod.png"
-# "../plots/DDE_EnergMod0.png"
-# "../plots/DDE_LenWeiDistr.png"
+# "../plots/TTR_EnergMod.png"
+# "../plots/TTR_EnergMod0.png"
+# "../plots/TTR_LenWeiDistr.png"
 
 setwd(wd)
 rm(list=ls())
@@ -435,13 +450,14 @@ setwd("Diet/finalCode")
 
 # EXPLORATORY ANALYSIS - COMMON DOLPHIN DIET (HAKE)
 # Length distribution (predator and prey), outliers and linear model
+
 source("DDE_HkeLen.r")
 ## inputs
-# "../../RData/DDE_AllDiet.csv"
+# "../../RData/TTR_AllDiet.csv"
 ## outputs
-# "../plots/DDE_DolphHkeLen.png"
-# "../plots/DDE_DolphHkeLenQrt.png"
-# "../plots/DDE_HkeLenSel.png"
+# "../plots/TTR_DolphHkeLen.png"
+# "../plots/TTR_DolphHkeLenQrt.png"
+# "../plots/TTR_HkeLenSel.png"
 
 setwd(wd)
 rm(list=ls())
@@ -450,15 +466,34 @@ wd <- getwd()
 
 setwd("Diet/finalCode")
 
-# EXPLORATORY ANALYSIS - COMMON DOLPHIN DIET (Sardine)
+# EXPLORATORY ANALYSIS - BOTTLENOSE DOLPHIN DIET (Sardine)
 # Length distribution (predator and prey), outliers and linear model
+
 source("DDE_SarLen.r")
 ## inputs
-# "../../RData/DDE_AllDiet.csv"
+# "../../RData/TTR_AllDiet.csv"
 ## outputs
-# "../plots/DDE_DolphSarLen.png"
-# "../plots/DDE_DolphSarLenQrt.png"
-# "../plots/DDE_SarLenSel.png"
+# "../plots/TTR_DolphSarLen.png"
+# "../plots/TTR_DolphSarLenQrt.png"
+# "../plots/TTR_SarLenSel.png"
+
+setwd(wd)
+rm(list=ls())
+wd <- getwd()
+
+
+setwd("Diet/finalCode")
+
+# EXPLORATORY ANALYSIS - BOTTLENOSE DOLPHIN DIET (Blue whiting)
+# Length distribution (predator and prey), outliers and linear model
+
+source("DDE_BWLen.r")
+## inputs
+# "../../RData/TTR_AllDiet.csv"
+## outputs
+# "../plots/TTR_DolphBWLen.png"
+# "../plots/TTR_DolphBWLenQrt.png"
+# "../plots/TTR_BWLenSel.png"
 
 setwd(wd)
 rm(list=ls())
@@ -469,11 +504,12 @@ setwd("Diet/finalCode")
 
 # BOX PLOT BY QUARTER - COMMON DOLPHIN DIET (HAKE)
 # Box plot of number and weight prey by quarter, length distribution of the diet
+
 source("DDE_DietSteps.r")
 ## inputs
-# "../../RData/DDE_AllDiet.csv"
+# "../../RData/TTR_AllDiet.csv"
 ## outputs
-# "../plots/DDE_hkeLen.png"
+# "../plots/TTR_hkeLen.png"
 
 setwd(wd)
 rm(list=ls())
@@ -484,54 +520,48 @@ setwd("Diet/finalCode")
 
 # DIET PROPORTION ANALYSIS - COMMON DOLPHIN DIET (HAKE)
 # Proportion of the hake in the diet by sex and quarter       
+
 source("DDE_DietProp.r")
 ## inputs
 # "../../RData/dietCD.csv"
 # "../../RData/dietCDPt.csv"
-# "../../RData/DDE_AllDiet.csv"
+# "../../RData/TTR_AllDiet.csv"
 ## outputs
-# "../plots/DDE_DietProp.png"
+# "../plots/TTR_DietProp.png"
 
 setwd(wd)
 rm(list=ls())
 wd <- getwd()
 
 
-#setwd("Diet/finalCode")
+      #setwd("Diet/finalCode")
 
 # DIET KJ ANALYSIS - COMMON DOLPHIN DIET (HAKE)
 # Kj analysis in the diet (tranformation of the weight in Kj for Gadget)
-#source("DDE_Kj.r")
+
+      #source("DDE_Kj.r")
 ## inputs
 # "../../RData/dietCD.csv"
 # "../../RData/dietCDPt.csv"
 ## outputs
 # ..
 
-#setwd(wd)
-#rm(list=ls())
-#wd <- getwd()
+      #setwd(wd)
+      #rm(list=ls())
+      #wd <- getwd()
 
 
-#setwd("Diet/finalCode")
+      #setwd("Diet/finalCode")
 
 # DIET TIME SERIES - COMMON DOLPHIN DIET (HAKE)
 # Time series GAM, relationship of the diet with the recruitmen and SSB (hake, blue whiting and sardine)  
-#source("DDE_TimeSeriesGAM.r")
+
+      #source("DDE_TimeSeriesGAM.r")
 ## inputs
 # "../../RData/All_mainprey_HAKsqr.txt"
 ## outputs
 
-#setwd(wd)
-#rm(list=ls())
-#wd <- getwd()
-
-
-setwd(wd)
-rm(list=ls())
-wd <- getwd()
-
-
-
-
+      #setwd(wd)
+      #rm(list=ls())
+      #wd <- getwd()
 

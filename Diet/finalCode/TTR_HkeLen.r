@@ -21,6 +21,7 @@
 
 # Charge libraries
 library(ggplot2)
+library(nlme)
 library(mgcv) 
 library(reshape)
 mytheme <- theme(panel.background =  element_rect(fill = NA, colour = "black", size = 0.5), 
@@ -32,11 +33,11 @@ ttrDiet <- read.csv2("../../RData/TTR_AllDiet.csv")
 
 # Seleccionamos solo los que tienen merluza como presa
 ttrHke <- ttrDiet[ttrDiet$Prey=="Hake",]
-ttrHke$Prey.length <- as.numeric(ttrHke$Prey.length)
+ttrHke$Prey.length <- as.numeric(as.character(ttrHke$Prey.length))
 ttrHke$Prey.length <- ttrHke$Prey.length*0.1 # Pasamos la merluza a centímetros
 
 # Plot talla predador vs presa
-#plot (ttrHke$Length, ttrHke$Prey.length,main="Length Common dolphin vs European hake",
+#plot (ttrHke$Length, ttrHke$Prey.length,main="Length Bottlenose dolphin vs European hake",
 #     xlab="Dolphin length (cm)", ylab="Hake length (cm)")
 
 
@@ -62,12 +63,12 @@ ttrHke$rg.Length <- cut(ttrHke$Length,
                         labels = ranges$rg)
 
 # Box plot, dolphins length distribution vs hake length
-#plot(ttrHke$rg.Length, ttrHke$Prey.length, main="Length Common dolphin vs European hake",
+#plot(ttrHke$rg.Length, ttrHke$Prey.length, main="Length Bottlenose dolphin vs European hake",
 #     xlab="Dolphin length ranges (cm)", ylab="Hake length (cm)")
 
 # Ranges
-range(ttrHke$Prey.length) # 2.7 115.3
-quantile(ttrHke$Prey.length, c(0.025, 0.975)) # 6.8000 104.6925
+range(ttrHke$Prey.length) # 4.3412 62.4271
+quantile(ttrHke$Prey.length, c(0.025, 0.975)) #  9.3067 49.1152 
 
 # Asignamos rangos de talla de las merluzas
 minH <- round(seq(min(ttrHke$Prey.length, na.rm=TRUE),max(ttrHke$Prey.length, na.rm=TRUE), 5))-3
@@ -81,7 +82,7 @@ ttrHke$rg.Prey.length <- cut(ttrHke$Prey.length,
                         include.lowest = TRUE, 
                         labels = rangesH$rg)
 # Plot talla presa vs predador
-#plot (ttrHke$rg.Prey.length,ttrHke$Length,  main="Length European hake vs Common dolphin",
+#plot (ttrHke$rg.Prey.length,ttrHke$Length,  main="Length European hake vs Bottlenose dolphin",
 #      xlab="Hake length ranges (cm)", ylab="Dolphin length (cm)")
 
 ##########################################################################
@@ -90,7 +91,7 @@ ttrHke$rg.Prey.length <- cut(ttrHke$Prey.length,
 ### Predicting catchability function ###
 
 # Kernel density estimation
-v <- c(ttrHke$Prey.length , 150)
+v <- c(ttrHke$Prey.length , 120)
 d <- density(v, adjust = 1)
 y <- d$y
 x <- d$x
@@ -99,10 +100,10 @@ g <- gam(y ~ s(x,k=30,fx=TRUE)) # degrees of freedom k ????
 prednew <- function(u) predict(g,newdata=data.frame(x=u)) 
 
 dfa <- data.frame(hklen = ttrHke$Prey.length)
-dfb <- data.frame(hklen=0:150, pred=prednew(0:150))
+dfb <- data.frame(hklen=0:120, pred=prednew(0:120))
 # dfb # Catchability
 
-gga <- ggplot(dfa, aes(hklen, ..density..)) + xlim(0,150) +
+gga <- ggplot(dfa, aes(hklen, ..density..)) + xlim(0,120) +
   geom_bar(binwidth=1) + ggtitle("Hake length distribution in Bottlenose dolphin stomachs") +
   ylab("frequency") + xlab("hake length (cm)") +
   mytheme
@@ -148,25 +149,25 @@ for (i in 1:nrow(ttrHke)){
 qrt <- c(1,2,3,4)
 
 for (i in qrt){
-  v <- c(ttrHke[ttrHke$Quarter==i,"Prey.length"] , 150)
+  v <- c(ttrHke[ttrHke$Quarter==i,"Prey.length"] , 120)
   d <- density(v, adjust = 1)
   y <- d$y
   x <- d$x
   g <- gam(y ~ s(x,k=30,fx=TRUE)) # degrees of freedom k ????
   # Predict probability of a given hake length 
   prednew <- function(u) predict(g,newdata=data.frame(x=u)) 
-  assign(paste("df", i, sep=""), data.frame(pred=prednew(0:150)))
+  assign(paste("df", i, sep=""), data.frame(pred=prednew(0:120)))
 }
 
-dfb <- data.frame(hklen=0:150, pred=prednew(0:150))
+dfb <- data.frame(hklen=0:120, pred=prednew(0:120))
 
-dfQrt <- data.frame(hklen=0:150, "1"=df1[,], "2"=df2[,], "3"=df3[,], "4"=df4[,])
+dfQrt <- data.frame(hklen=0:120, "1"=df1[,], "2"=df2[,], "3"=df3[,], "4"=df4[,])
 ggdfQrt <- melt(dfQrt, id.vars="hklen", variable_name="qrt")
 ggdfQrt$qrt <- as.numeric(ggdfQrt$qrt)
 
 df <- data.frame(hklen = ttrHke$Prey.length, qrt = ttrHke$Quarter)
 
-gg1 <- ggplot(df, aes(hklen, ..density..)) + xlim(0,150) +
+gg1 <- ggplot(df, aes(hklen, ..density..)) + xlim(0,120) +
   facet_grid(qrt~.) +
   geom_bar(binwidth=1) + ggtitle("Hake length distribution by quarters in Bottlenose dolphin stomachs") +
   ylab("frequency") + xlab("hake length (cm)") +
@@ -215,14 +216,14 @@ mu <- log(m)-(sigma^2)/2
 
 # Linear model
 lmTot <- lm(Prey.length ~ Length, data=ttrHke)
-summary(lmTot)
+#summary(lmTot)
 #plot (ttrHke$Length, ttrHke$Prey.length, xlim=c(0,240),
 #      main=paste("Y =", round(lmTot[[1]][[1]], 2), "+", round(lmTot[[1]][[2]],2),"X + e"),
 #      xlab="Dolphin length (cm)", ylab="Hake length (cm)")
 #abline(lmTot, col="red")
 # Hake length prediction of a given dolphin length
 lmPred <- function(u) predict(lmTot,newdata=data.frame(Length=u)) 
-lmPred(180) # select dolphin length
+#lmPred(180) # select dolphin length
 
 # Corrected data (no outliers)
 #lmTotOut <- lm(Prey.length ~ Length, data=ttrHkeOut)
@@ -279,7 +280,7 @@ xhistD = hist(ttrHke$Length, plot=FALSE)
 rgMinD <- xhistD$mids-5
 rgMaxD <- xhistD$mids+5
 nD <- xhistD$counts
-# Common dolphin lengths frequencies
+# Bottlenose dolphin lengths frequencies
 frecD <- data.frame(rgMinD, rgMaxD, nD); frecD 
 
 yhistH = hist(ttrHke$Prey.length, plot=FALSE)
@@ -288,6 +289,9 @@ rgMaxH <- yhistH$mids+2.5
 nH <- yhistH$counts
 # Hake lengths frequencies
 frecH <- data.frame(rgMinH, rgMaxH, nH); frecH 
+
+# Close opened plots
+#dev.off()
 
 # Detach packages
 detach(package:mgcv)
