@@ -235,6 +235,10 @@ save(LWall, file="../../RObjects/LWall.RData")
 #len <- seq(110.5, 250.5)
 #wei <- exp(LWall[[1]] + LWall[[2]] * len)
 #data.frame(len, wei)
+#len <- seq(110.5, 250.5, by=5)
+#wei <- exp(LWall[[1]] + LWall[[2]] * len)
+#data.frame(len, wei)
+
 
 
 ### Plotting ###
