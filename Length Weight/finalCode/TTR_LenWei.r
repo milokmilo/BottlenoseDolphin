@@ -20,6 +20,8 @@
 # "../../RObjects/LWfemales.RData"
 # "../../RObjects/LWall.RData"
 
+################################################################################################## #
+
 
 # IMPORTANT: Set working directory (to source file location)
 #setwd("./Length weight/finalCode")
@@ -227,6 +229,12 @@ Amod$weight <- predict(Aem,newdata=Amod)
 #lines(Amod, col="green")
 
 save(LWall, file="../../RObjects/LWall.RData")
+
+# File for the model length-weight from 
+#load("../../RObjects/LWall.RData")
+#len <- seq(110.5, 250.5)
+#wei <- exp(LWall[[1]] + LWall[[2]] * len)
+#data.frame(name=paste("len",substr(len,1,3),sep=""), len=len, wei=wei)
 
 
 ### Plotting ###
