@@ -72,11 +72,11 @@ TTR.A <- data.frame(age=c(TTR.M$age, TTR.F$age), length=c(TTR.M$length, TTR.F$le
                     Sex=c(rep("M",length.out=nrow(TTR.M)), rep("F",length.out=nrow(TTR.F))))
 
 # Forcing t0 in order to get a initial length of arround 100cm 
-#to <- 1.1 
-vbA <- nls(length~Linf*(1-exp(-K*(age-(-to)))), start=parVB, data=TTR.A) 
+#to <- -1.1 
+vbA <- nls(length~Linf*(1-exp(-K*(age-to))), start=parVB, data=TTR.A) 
 #coef(vbA)
 # Linf           K          to 
-# 254.9330578   0.2227458   4.4724255 
+# 254.9330578   0.2227458   -4.4724255 
 
 # Forcing t0 in order to get a initial length of arround 100cm 
 #to <- 0.8
@@ -170,5 +170,22 @@ mf <- mf2.3 + ylab("length (cm) \n") + xlab("age") + xlim(0,50) + ylim(90,300) +
 png("../plots/TTR_gzSex-Wells&Scott.png", 700, 600)
 print(mf)
 dev.off()
+
+
+### Predecimos el modelo para todos los delfines pero fijando linf como 300 ###
+
+parVB <- list(K=0.18, to=-3) 
+Linf <- 270
+# Growth model  with the parameters estimated with non linear least squares
+vbAGadget <- nls(length~Linf*(1-exp(-K*(age-to))), start=parVB, data=TTR.A)  
+# Saving data50
+save(file="../../RObjects/vbAGadget.RData", vbAGadget)
+
+plot(TTR.A$age, TTR.A$length)
+a <- TTR.A$age
+modAllGad <-Linf*(1-exp(-coef(vbAGadget)[[1]]*(a-(coef(vbAGadget)[[2]]))))
+lines(spline(TTR.A$age, modAllGad), col="red")
+modA <- coef(vbA)[[1]]*(1-exp(-coef(vbA)[[2]]*(a-(coef(vbA)[[3]]))))
+lines(spline(TTR.A$age, modA), col="blue")
 
 
