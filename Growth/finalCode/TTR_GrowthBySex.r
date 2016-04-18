@@ -33,43 +33,45 @@ mytheme <- theme(panel.background =  element_rect(fill = NA, colour = "black", s
 ######## Growth model following Wells and Scott, 1999 ########
 
 # See files with length/age relationships: "TTR-AgeLength.Males.txt" and "TTR-AgeLength.Females.txt"
-TTR.M <- read.table("../../RData/TTR-AgeLength.Males.txt", comment.char="#", head=T)
-range(TTR.M$Y)
-names(TTR.M) <- c("age", "length")
+#TTR.M <- read.table("../../RData/TTR-AgeLength.Males.txt", comment.char="#", head=T)
+#range(TTR.M$Y)
+#names(TTR.M) <- c("age", "length")
 # [1]  140.7098 282.1363
-TTR.F <- read.table("../../RData/TTR-AgeLength.Females.txt", comment.char="#", head=T)
-range(TTR.F$Y)
-names(TTR.F) <- c("age", "length")
+#TTR.F <- read.table("../../RData/TTR-AgeLength.Females.txt", comment.char="#", head=T)
+#range(TTR.F$Y)
+#names(TTR.F) <- c("age", "length")
 # [1]  134.0188 267.0540
 
 
 # Starting values for parameters 
-parVB <- list(Linf=290, K=0.18, to=-3)
-parGZ <- list(Linf=290, K=0.5, to=0.1)
+#parVB <- list(Linf=290, K=0.18, to=-3)
+#parGZ <- list(Linf=290, K=0.5, to=0.1)
 
 # Males
-vbM <- nls(length ~ Linf*(1-exp(-K*(age-to))), start=parVB, data=TTR.M)      
+#vbM <- nls(length ~ Linf*(1-exp(-K*(age-to))), start=parVB, data=TTR.M)      
 #coef(vbM)
 # Linf           K          to 
 # 266.1398056   0.1585034  -6.0138670 
-gzM <- nls(length ~ Linf*exp(-K*exp(-age*to)), start=parGZ, data=TTR.M)      
+#gzM <- nls(length ~ Linf*exp(-K*exp(-age*to)), start=parGZ, data=TTR.M)      
 #coef(gzM)
 # Linf           K          to 
 # 265.5960328   0.4644287   0.1761632 
 
 # Females
-vbF <- nls(length~Linf*(1-exp(-K*(age-to))), start=parVB, data=TTR.F)      
+#vbF <- nls(length~Linf*(1-exp(-K*(age-to))), start=parVB, data=TTR.F)      
 #coef(vbF)
 # Linf           K          to 
 # 248.7892779   0.2776871  -3.6354046 
-gzF <- nls(length~Linf*exp(-K*exp(-age*to)), start=parGZ, data=TTR.F)      
+#gzF <- nls(length~Linf*exp(-K*exp(-age*to)), start=parGZ, data=TTR.F)      
 #coef(gzF)
 # Linf           K          to 
 # 248.6692910   0.4322174   0.3032412 
 
 # All
-TTR.A <- data.frame(age=c(TTR.M$age, TTR.F$age), length=c(TTR.M$length, TTR.F$length), 
-                    Sex=c(rep("Male",length.out=nrow(TTR.M)), rep("Female",length.out=nrow(TTR.F))))
+#TTR.A <- data.frame(age=c(TTR.M$age, TTR.F$age), 
+#                    length=c(TTR.M$length, TTR.F$length), 
+#                    Sex=c(rep("Male",length.out=nrow(TTR.M)), 
+#                          rep("Female",length.out=nrow(TTR.F))))
 
 # Forcing t0 in order to get a initial length of arround 100cm 
 #to <- -1.1 
