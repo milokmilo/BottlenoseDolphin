@@ -24,17 +24,18 @@ setwd("Growth/finalCode")
 
 source("TTR_GrowthBySex.r")
 # inputs
-# "../../RData/DDE_MalesFiona.csv"
-# "../../RData/DDE_FemalesFiona.csv"
+# "../../RData/TTR-AgeLength.Males.txt" <- NO
+# "../../RData/TTR-AgeLength.Females.txt" <- NO
+# "../../RData/CEMMA.csv"
 # outputs
-# "../../RObjects/vbA.RData"
-# "../../RObjects/vbM.RData"
-# "../../RObjects/vbF.RData"
-# "../../RObjects/gzA.RData"
-# "../../RObjects/gzM.RData"
-# "../../RObjects/gzF.RData"
-# "../../plots/TTR_vbSex-Wells&Scott.png"
-# "../../plots/TTR_gzSex-Wells&Scott.png"
+# "../../RObjects/vbA.RData" <- NO
+# "../../RObjects/vbM.RData" <- NO
+# "../../RObjects/vbF.RData" <- NO
+# "../../RObjects/gzA.RData" <- NO
+# "../../RObjects/gzM.RData" <- NO
+# "../../RObjects/gzF.RData" <- NO
+# "../../plots/TTR_vbSex-Wells&Scott.png" <- NO
+# "../../plots/TTR_gzSex-Wells&Scott.png" <- NO
 
 setwd(wd)
 rm(list=ls())
