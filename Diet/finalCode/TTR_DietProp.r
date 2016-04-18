@@ -114,7 +114,7 @@ quantile(dietHke, c(0.025, 0.5, 0.975)) # 29.06534 39.19146 52.33443
 
 # Portuguese hake percentage 39.19146 (29.06534, 52.33443) 
 
-# Total Gaddine percentage Iberian Peninsula
+# Total Hake percentage Iberian Peninsula
 totHke <- c(Hke[[2]], dietHke)
 mean(totHke) # 36.36426
 median(totHke) # 36.36383

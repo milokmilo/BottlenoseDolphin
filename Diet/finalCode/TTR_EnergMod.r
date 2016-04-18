@@ -179,16 +179,24 @@ energMod0 <- lm(allEnerg$value ~ allEnerg$w - 1)
 #energMod0 <- lm(allEnerg$value ~ 0 + allEnerg$w) # same result
 
 #############################
-A <- coef(energMod)[[1]]  ###
-B <- coef(energMod)[[2]]  ###
+A <- coef(energMod)[[1]]  ### 2.520881
+B <- coef(energMod)[[2]]  ### 0.05974141
 consEst <- A + B * df$w   ###
 #############################
 df$mod <- consEst
 #############################
-A <- coef(energMod0)[[1]] ###
+A <- coef(energMod0)[[1]] ### 0.06740847
 consEst0 <- A * df$w      ###
 #############################
 df$mod0 <- consEst0
+
+########################################
+# Max energy consumption
+#Fi = 0.06740847 * W
+#W = 0.0000004981065 * L^3.589617
+#W = 0.06740847*(0.0000004981065) * 0.06740847*(L^3.589617)
+#FI = 0.0000000335766 * L^3.589617
+########################################
 
 # Bootstrap for an average dolphin (for the mean) with the new model
 meanFuncNewMod <- function(data, d){
@@ -235,6 +243,7 @@ png("../plots/TTR_EnergMod0.png", width=600, height=400)
 print(gg3)
 dev.off()
 #```
+
 
 #########################################################################
 

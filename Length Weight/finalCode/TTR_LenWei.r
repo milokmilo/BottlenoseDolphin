@@ -279,19 +279,19 @@ save(LWallWS, file="../../RObjects/LWallWS.RData")
 
 ### Plotting ###
 
-Mmod$sex <- "M"
-Fmod$sex <- "F"
+Mmod$sex <- "Male"
+Fmod$sex <- "Female"
 MFmod <- rbind(Mmod,Fmod)
 
 grl <- ggplot(Amod, aes(x=length, y=weight)) + geom_line() +
-          geom_point(data=ALW, aes(x=length, y=weight, colour=factor(sex))) +
+        #  geom_point(data=ALW, aes(x=length, y=weight, colour=factor(sex))) +
           geom_line(data=MFmod, aes(x=length, y=weight, colour=factor(sex))) +
               scale_colour_manual(values=c("orangered", "deepskyblue")) +
           xlim(100,300) + ylim(0,350) +
           labs(title="Bottlenose dolphin length-weight relationship following Wells & Scott, 1999",
           x="weight (kg)", y="length (cm) \n") + mytheme
  
-png("../plots/TTR_LengthWeight-Wells&Scott.png", 700, 600)
+png("../plots/TTR_LengthWeight-Wells&Scott.png", 600, 500)
 print(grl)
 dev.off()
 

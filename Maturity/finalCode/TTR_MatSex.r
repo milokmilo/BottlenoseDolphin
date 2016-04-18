@@ -1,13 +1,20 @@
-####################################################################################################
+################################################################################################## #
 #                    MATURITY SPLITED BY SEX FOR BOTTLENOSE DOLPHIN
 #     Three datasets fitted (males, females, females with old immature females removed)    
 #                    Bootstrap to calculate the 95% CL of the A50 
 #                  created: (camilo.saavedra@vi.ieo.es) 20/04/2015
-####################################################################################################
+################################################################################################## #
 
 
 # FALTAN DATOS OBSERVADOS DE EDAD Y MADUREZ
 
+
+# inputs
+
+# outputs
+# "../../RObjects/TTR_Mat-Wells.RData"
+
+################################################################################################## #
 
 
 # IMPORTANT: Set working directory (to source file location)
@@ -31,12 +38,12 @@ Mat <- data.frame(age=age, matMale=matMale, matFemale=matFemale)
   
 
 glm.male <- glm(matMale ~ age, family="binomial", data=Mat)
-p.m <- predict(glm.male, newdata = data.frame(age=seq(0,50,0.1)), "response")
-p.male <- data.frame(age=seq(0,50,0.1), matPred=round(p.m,2))
+p.m <- predict(glm.male, newdata = data.frame(age=seq(0,49,0.1)), "response")
+p.male <- data.frame(age=seq(0,49,0.1), matPred=round(p.m,2))
 
 glm.female <- glm(matFemale ~ age, family="binomial", data=Mat)
-p.f <- predict(glm.female, newdata = data.frame(age=seq(0,50,0.1)), "response")
-p.female <- data.frame(age=seq(0,50,0.1), matPred=round(p.f,2))
+p.f <- predict(glm.female, newdata = data.frame(age=seq(0,49,0.1)), "response")
+p.female <- data.frame(age=seq(0,49,0.1), matPred=round(p.f,2))
 
 m50 <- p.male$age[match(TRUE,p.m>.5)]
 f50 <- p.female$age[match(TRUE,p.f>.5)]
@@ -48,14 +55,14 @@ A50 <- ls(pattern="(.+)50")
 
 ## ggplot ##
 
-MatM <- data.frame(Mat[,-3], sex="M") 
-MatF <- data.frame(Mat[,-2], sex="F")
+MatM <- data.frame(Mat[,-3], sex="Male") 
+MatF <- data.frame(Mat[,-2], sex="Female")
 names(MatM) <- c("age", "mat", "sex")
 names(MatF) <- c("age", "mat", "sex")  
 gMat <- rbind(MatM, MatF)
 
-p.male$sex <- "M"
-p.female$sex <- "F"
+p.male$sex <- "Male"
+p.female$sex <- "Female"
 
 ggMat <- rbind(p.male, p.female)
 
@@ -63,20 +70,20 @@ ggMat <- rbind(p.male, p.female)
 gg1 <- ggplot(gMat, aes(age, mat, colour=sex)) + 
   geom_point() + geom_line(aes(age, matPred, group=sex), data=ggMat) +
   ylab("percentage of maturity \n") + xlab("age") +
-  ggtitle("Maturity Ogive for Bottlenose dolphin following Wells et al.,1987 (males and females)") +
+  ggtitle("Maturity Ogive for Bottlenose dolphin following Wells et al.,1987") +
   mytheme + 
   annotate("text", x=25, y=0.56, label=paste("Male A50 =", m50, sep=""), col="deepskyblue") + 
   annotate("text", x=25, y=0.5, label=paste("Female A50 =", f50, sep=""), col="orangered")
 
 
-png("../plots/TTR_MatSex.png", width=600, height=400)
+png("../plots/TTR_MatSex.png", width=600, height=500)
 print(gg1)
 dev.off()
 
 
 
 # Save maturity data
-save(Mat, file="../../RObjects/TTR_Mat-Wells.RData")
+save(ggMat, file="../../RObjects/TTR_Mat-Wells.RData")
 
 
 ### BOOTSTRAP MATURITY OGIVE, A50 AND CI ###

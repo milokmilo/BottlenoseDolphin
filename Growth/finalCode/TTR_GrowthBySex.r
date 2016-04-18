@@ -69,7 +69,7 @@ gzF <- nls(length~Linf*exp(-K*exp(-age*to)), start=parGZ, data=TTR.F)
 
 # All
 TTR.A <- data.frame(age=c(TTR.M$age, TTR.F$age), length=c(TTR.M$length, TTR.F$length), 
-                    Sex=c(rep("M",length.out=nrow(TTR.M)), rep("F",length.out=nrow(TTR.F))))
+                    Sex=c(rep("Male",length.out=nrow(TTR.M)), rep("Female",length.out=nrow(TTR.F))))
 
 # Forcing t0 in order to get a initial length of arround 100cm 
 #to <- -1.1 
@@ -110,7 +110,7 @@ newVB$length <- predict(vbA,newdata=newVB)  # predicting von Bertalanffy growth 
 g2 <- g0 + geom_line(data=newVB) + xlim(0,50) + ylim(90,300) +
   labs(x="age", y="length \n", title="All bottlenose dolphins - von Bertalanffy \n") +
   mytheme 
-g2
+#g2
 
   # All ages Gompertz
 
@@ -119,14 +119,14 @@ newGZ$length <- predict(gzA,newdata=newGZ)  # predicting Gompertz growth model
 g3 <- g0 + geom_line(data=newGZ) + xlim(0,50) + ylim(90,300) +
   labs(x="age", y="length \n", title="All bottlenose dolphins - Gompertz \n") +
   mytheme
-g3
+#g3
 
 
 ### Males, Females and All ###
 
-mf1 <- ggplot(TTR.A, aes(age,length)) + geom_point(aes(colour=factor(Sex))) +
-  scale_colour_manual(values=c("orangered", "deepskyblue"))
-mf1
+mf1 <- ggplot(TTR.A, aes(age,length)) + geom_point(aes(colour=factor(Sex))) 
+#  scale_colour_manual(values=c("#0099cc", "#ff3333"))
+#mf1
 #mf2 <- mf1 + geom_smooth(method="loess", aes(colour=factor(Sex))) + xlim(0,50) + ylim(90,300) +
 #  labs(x="age", y="length \n", title="Bottlenose dolphins (Male and Females) - loess") +
 #  mytheme   # methods= lm, glm, gam, loess, rlm.
@@ -138,16 +138,16 @@ mf2.1 <- mf1 + geom_line(data=newVB, colour="black")
 #mf2.1
 newVB.M <- data.frame(age=seq(0,50,length.out=51)) 
 newVB.M$length <- predict(vbM,newdata=newVB.M)  
-mf2.2 <- mf2.1 + geom_line(data=newVB.M, colour="deepskyblue")
+mf2.2 <- mf2.1 + geom_line(data=newVB.M, colour="#0099cc")
 #mf2.2
 newVB.F <- data.frame(age=seq(0,50,length.out=51)) 
 newVB.F$length <- predict(vbF,newdata=newVB.F)  
-mf2.3 <- mf2.2 + geom_line(data=newVB.F, colour="orangered")
+mf2.3 <- mf2.2 + geom_line(data=newVB.F, colour="#ff3333")
 #mf2.3
 mf <- mf2.3 + ylab("length (cm) \n") + xlab("age") + xlim(0,50) + ylim(90,300) + 
-  ggtitle("von Bertalanffy growth model (males and females) data from Wells & Scott 1999") +
+  ggtitle("Von Bertalanffy growth model. Data from Wells & Scott 1999") +
   mytheme
-png("../plots/TTR_vbSex-Wells&Scott.png", 700, 600)
+png("../plots/TTR_vbSex-Wells&Scott.png", 600, 500)
 print(mf)
 dev.off()
 
@@ -172,7 +172,7 @@ print(mf)
 dev.off()
 
 
-### Predecimos el modelo para todos los delfines pero fijando linf como 300 ###
+### Predecimos el modelo para todos los delfines pero fijando linf como 270 ###
 
 parVB <- list(K=0.18, to=-3) 
 Linf <- 270
@@ -187,5 +187,13 @@ modAllGad <-Linf*(1-exp(-coef(vbAGadget)[[1]]*(a-(coef(vbAGadget)[[2]]))))
 lines(spline(TTR.A$age, modAllGad), col="red")
 modA <- coef(vbA)[[1]]*(1-exp(-coef(vbA)[[2]]*(a-(coef(vbA)[[3]]))))
 lines(spline(TTR.A$age, modA), col="blue")
+
+
+### Predecimos tallas por edad para el archivo de reclutamiento de Gadget ###
+
+#load("../../RObjects/vbA.RData")
+#a <- 0:35
+#data.frame(age=a,len=coef(vbA)[[1]]*(1-exp(-coef(vbA)[[2]]*(a-(coef(vbA)[[3]])))))
+
 
 
