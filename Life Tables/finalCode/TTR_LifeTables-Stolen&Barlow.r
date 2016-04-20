@@ -1,5 +1,5 @@
 ################################################################################################### #
-#                 FLORIDA BOTTLENOSE LIFE TABLES - A - M - F
+#                 FLORIDA BOTTLENOSE DOLPHIN LIFE TABLES - A - M - F
 #     Life tables from Florida Bottlenose data for male, female and both together
 #    raw data -number of stranded dolphins- extracted from Stolen and Barlow, 2003                    
 #                created: (camilo.saavedra@vi.ieo.es) 04/06/2014
@@ -34,7 +34,7 @@
 
 ## Charge libraries
 library(ggplot2)
-library(reshape)
+library(reshape2)
 
 
 ############### Life table both sexes ###############
@@ -119,6 +119,10 @@ b3 <- coef(expS)[[2]]
 Msenesc <- (a3 * exp(b3 * ag)) + a2
 ## Model
 BotSiler <- a1*exp(-b1*ag)+a2+a3*exp(b3*ag)
+round(BotSiler[(0:10)+1], 3)
+# 0.145 0.115 0.093 0.077 0.065 0.056 0.050 0.045 0.042 0.040 0.039
+round(BotSiler[(8:35)+1], 3)
+# 0.042 0.040 0.039 0.039 0.039 0.040 0.042 0.044 0.047 0.051 0.055 0.061 0.069 0.078 0.089 0.103 0.121 0.142 0.168 0.199 0.239 0.287 0.346 0.419 0.508 0.618 0.752 0.918
 
 
 ## Siler table

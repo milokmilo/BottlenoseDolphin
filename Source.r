@@ -84,8 +84,12 @@ source("TTR_Aggregation.r")
 # "../ttr.len5.agg"
 # "../ttr.len20.agg"
 # "../ttr.alllen.agg"
-# "../ttr.age.agg"
-# "../ttr.allage.agg"
+# "../ttr.age35.agg"
+# "../ttr.age35_0-10.agg"
+# "../ttr.age35_8-35.agg"
+# "../ttr.allage35.agg"
+#"../ttr.allage0-10.agg"
+#"../ttr.allage8-35.agg"
 # "../ttr.area.agg"
 
 setwd(wd)
