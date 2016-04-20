@@ -20,22 +20,73 @@ wd <- getwd()
 setwd("Growth/finalCode")
 
 # von Bertalanffy and Gompertz growth models for males and females
-# following Wells and Scott, 1999 and with our own data 
+# with our own data (Fiona's)
+# and following Wells and Scott, 1999 and with our own data 
 
 source("TTR_GrowthBySex.r")
 # inputs
-# "../../RData/TTR-AgeLength.Males.txt" <- NO
-# "../../RData/TTR-AgeLength.Females.txt" <- NO
+# "../../RData/TTR_Age-Length_M.WS.txt"
+# "../../RData/TTR_Age-Length_F.WS.txt"
 # "../../RData/CEMMA.csv"
 # outputs
-# "../../RObjects/vbA.RData" <- NO
-# "../../RObjects/vbM.RData" <- NO
-# "../../RObjects/vbF.RData" <- NO
-# "../../RObjects/gzA.RData" <- NO
-# "../../RObjects/gzM.RData" <- NO
-# "../../RObjects/gzF.RData" <- NO
-# "../../plots/TTR_vbSex-Wells&Scott.png" <- NO
-# "../../plots/TTR_gzSex-Wells&Scott.png" <- NO
+# "../../RObjects/vbA.RData"
+# "../../RObjects/vbM.RData"
+# "../../RObjects/vbF.RData"
+# "../../RObjects/gzA.RData"
+# "../../RObjects/gzM.RData"
+# "../../RObjects/gzF.RData"
+# "../../plots/TTR_vbSex-Wells&Scott.png"
+# "../../plots/TTR_gzSex-Wells&Scott.png"
+# "../plots/TTR_growth_vb.png"
+# Gadget
+# "../ttr.catch.lik"
+# "../ttr.catches.fleet"
+
+setwd(wd)
+rm(list=ls())
+wd <- getwd()
+
+#### LENGTH WEIGHT RELATIONSHIP - BOTTLENOSE DOLPHIN ####
+
+setwd("Length Weight/finalCode")
+
+source("TTR_LenWei.r")
+# inputs
+# "../../RData/MaleTTR-AgeWeight.txt
+# "../../RData/FemaleTTR-AgeWeight.txt
+# "../../RObjects/vbM.RData"
+# "../../RObjects/vbF.RData"
+# "../../RObjects/vbA.RData"
+# outputs
+# "../plots/TTR_LengthWeight-Pierce.png"
+# "../plots/TTR_LengthWeight-Ridgway&Fenner.png"
+# "../plots/TTR_LengthWeight-Wells&Scott.png"
+# "../../RObjects/LWmales.RData"
+# "../../RObjects/LWfemales.RData"
+# "../../RObjects/LWall.RData"
+# Gadget
+# "../ttr.refwgt1"
+# "../ttr.refwgt5"
+# "../ttr.refwgt20"
+
+setwd(wd)
+rm(list=ls())
+wd <- getwd()
+
+
+#### GROWTH (MALES AND FEMALES) - BOTTLENOSE DOLPHIN ####
+
+setwd("Aggregation/finalCode")
+
+source("TTR_Aggregation.r")
+# Gadget
+# "../ttr.len1.agg"
+# "../ttr.len5.agg"
+# "../ttr.len20.agg"
+# "../ttr.alllen.agg"
+# "../ttr.age.agg"
+# "../ttr.allage.agg"
+# "../ttr.area.agg"
 
 setwd(wd)
 rm(list=ls())
